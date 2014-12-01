@@ -156,9 +156,7 @@ public class TileEntityLadderDispenser extends TileEntityMachineBase implements 
 											vertDir += -ladder.getDirection();
 										
 									}
-									
-									FMLLog.info("[" + References.MOD_NAME + "] Direction: [" + this.getFacingDirection() + "], Coords [" + (xCoord + xOffset) + ", " + (yCoord + vertDir) + ", " + (zCoord + zOffset) + "], placement: [" + this.canSetLadder(ladder, xCoord + xOffset, yCoord + vertDir, zCoord + zOffset) + "]");
-									
+																		
 									if (this.canSetLadder(ladder, xCoord + xOffset, yCoord + vertDir, zCoord + zOffset)) {
 										ItemStack ladderStack = extractLadderFromDispenser(slot);
 										if (ladderStack != null && ladderStack.stackSize > 0) {
