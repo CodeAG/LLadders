@@ -38,12 +38,21 @@ public class LLaddersMessageHandler implements IMessageHandler<LLaddersMessage, 
 			int x, y, z;
 			OutputSide side;
 			
+			// use short, easy to type local variables 
 			x = message.getX();
 			y = message.getY();
 			z = message.getZ();
 			side = message.getSide();
 			
-			World world = ctx.getServerHandler().playerEntity.worldObj;
+			// declare world. We are dependent on a player using the dispenser object
+			World world;
+			
+			try {
+				world = ctx.getServerHandler().playerEntity.worldObj;
+			} catch (Exception err) {
+				FMLLog.warning("[" + References.MOD_NAME + "] couldn't get placing player needed to get world object");
+				return null;
+			}
 			try {
 				TileEntityLadderDispenser ladderDispenserEntity = (TileEntityLadderDispenser)world.getTileEntity(x, y, z);
 				ladderDispenserEntity.setPlacement(side);
