@@ -143,6 +143,7 @@ public class TileEntityLadderDispenser extends TileEntityMachineBase implements 
 									ladder = (BlockGenericLadder)Block.getBlockFromItem(stack.getItem());
 								} catch (Exception err) {
 									FMLLog.warning("[" + References.MOD_NAME + "] LadderDispenser found Block that is not any type of Luppis Ladders Ladder.");
+									this.setActiveState(false);
 									return;
 								}
 								if (ladder.isModeConforming(mode)) { // If block in slot is the same as the ladder we are trying to place - continue.
@@ -282,7 +283,7 @@ public class TileEntityLadderDispenser extends TileEntityMachineBase implements 
 			if (!worldObj.isAirBlock(x, y, z))
 				return false;
 		}
-		
+		OutputSide side = this.getPlacement();
 		// Try to see if hanging ladders will be able to be placed here
 		if (this.getPlacement() != OutputSide.UPDOWN && (ladder == LLadders.blockRopeLadder || ladder == LLadders.blockVineLadder)) {
 			boolean returnValue = false;
@@ -292,9 +293,28 @@ public class TileEntityLadderDispenser extends TileEntityMachineBase implements 
 			
 			if (worldObj.isSideSolid(x, y + 1, z, ForgeDirection.DOWN))
 				returnValue = true;
-			else if (worldObj.isBlockNormalCubeDefault(x - zOffset, y, z - xOffset, false))
-				returnValue = true;
-			else {
+			
+			// If we face the dispenser SOUTH (remember ForgeDirection is 90° CCW)
+			else if (this.getFacingDirection() == ForgeDirection.WEST) {
+				if (worldObj.isBlockNormalCubeDefault(x, y, z - 1, false))
+					returnValue = true;
+			
+			// If we face the dispenser NORTH (remember ForgeDirection is 90° CCW)
+			} else if (this.getFacingDirection() == ForgeDirection.EAST) {
+				if (worldObj.isBlockNormalCubeDefault(x, y, z + 1, false))
+					returnValue = true;
+			
+			// If we face the dispenser WEST (remember ForgeDirection is 90° CCW)
+			} else if (this.getFacingDirection() == ForgeDirection.NORTH) {
+				if (worldObj.isBlockNormalCubeDefault(x + 1 , y, z, false))
+					returnValue = true;
+			
+			// If we face the dispenser EAST (remember ForgeDirection is 90° CCW)
+			} else if (this.getFacingDirection() == ForgeDirection.SOUTH) {
+				if (worldObj.isBlockNormalCubeDefault(x - 1, y, z, false))
+					returnValue = true;
+				
+			} else {
 				try {
 					BlockGenericLadder testBlock = (BlockGenericLadder)worldObj.getBlock(x, y - ladder.getDirection(), z);
 					returnValue = true;

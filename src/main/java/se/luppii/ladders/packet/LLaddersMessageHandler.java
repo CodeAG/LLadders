@@ -49,6 +49,7 @@ public class LLaddersMessageHandler implements IMessageHandler<LLaddersMessage, 
 				ladderDispenserEntity.setPlacement(side);
 				
 				ladderDispenserEntity.updateEntity(); // this is to make sure we immediately start working with ladders on the newly chosen side
+				world.markBlockForUpdate(x, y, z); // if we change output side, update icons by marking the block for update
 
 			} catch (Exception err) {
 				FMLLog.warning("[" + References.MOD_NAME + "] Didn't receive a LadderDispenser TileEntity. Nothing to do");
