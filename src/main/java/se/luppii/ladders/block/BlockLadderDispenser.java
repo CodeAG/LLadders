@@ -211,6 +211,8 @@ public class BlockLadderDispenser extends BlockContainer {
 	 */
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int par1, int par2, int par3, OutputSide par4) {
+		
+		// This bit is when ladders is outputed to the side and turns the textures appropriately 
 		if (par4 != OutputSide.UPDOWN) {
 			switch (par1) {
 				case 0: case 1:
@@ -227,7 +229,8 @@ public class BlockLadderDispenser extends BlockContainer {
 						return this.icons[4];
 			}
 		}
-			
+		
+		// this bit is when ladders are outputed up and down and need to turn the texture to face correctly 
 		switch (par2) {
 			case 0:
 				if (par3 > 1) {

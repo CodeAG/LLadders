@@ -283,7 +283,7 @@ public class TileEntityLadderDispenser extends TileEntityMachineBase implements 
 			if (!worldObj.isAirBlock(x, y, z))
 				return false;
 		}
-		OutputSide side = this.getPlacement();
+		
 		// Try to see if hanging ladders will be able to be placed here
 		if (this.getPlacement() != OutputSide.UPDOWN && (ladder == LLadders.blockRopeLadder || ladder == LLadders.blockVineLadder)) {
 			boolean returnValue = false;
@@ -291,6 +291,7 @@ public class TileEntityLadderDispenser extends TileEntityMachineBase implements 
 			int xOffset = offsets[0];
 			int zOffset = offsets[1];
 			
+			// Solid block above?
 			if (worldObj.isSideSolid(x, y + 1, z, ForgeDirection.DOWN))
 				returnValue = true;
 			
@@ -314,13 +315,13 @@ public class TileEntityLadderDispenser extends TileEntityMachineBase implements 
 				if (worldObj.isBlockNormalCubeDefault(x - 1, y, z, false))
 					returnValue = true;
 				
-			} else {
-				try {
-					BlockGenericLadder testBlock = (BlockGenericLadder)worldObj.getBlock(x, y - ladder.getDirection(), z);
-					returnValue = true;
-				} catch (Exception err) {
-					// Another block is above us
-				}
+			} 
+			
+			try {
+				BlockGenericLadder testBlock = (BlockGenericLadder)worldObj.getBlock(x, y - ladder.getDirection(), z);
+				returnValue = true;
+			} catch (Exception err) {
+				// Another block is above us
 			}
 			
 			return returnValue;
