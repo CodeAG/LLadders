@@ -12,6 +12,8 @@ public class Config {
 	public static Property sturdyLadderLeftClick;
 
 	public static Property vineLadderLeftClick;
+	
+	public static Property debugMode;
 
 	// Updater
 	public static Property checkForUpdates;
@@ -29,6 +31,8 @@ public class Config {
 		Configuration config = new Configuration(e.getSuggestedConfigurationFile());
 		try {
 			config.load();
+			// Are we debugging?
+			debugMode = config.get(Configuration.CATEGORY_GENERAL, "Luppis Ladders Debug Mode", false);
 			// Block config.
 			ropeLadderLeftClick = config.get(Configuration.CATEGORY_GENERAL, "Rope Ladder extend on left click", true);
 			sturdyLadderLeftClick = config.get(Configuration.CATEGORY_GENERAL, "Sturdy Ladder extend on left click", true);

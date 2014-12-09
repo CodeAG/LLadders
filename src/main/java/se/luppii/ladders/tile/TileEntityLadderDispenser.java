@@ -12,6 +12,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import se.luppii.ladders.LLadders;
 import se.luppii.ladders.block.BlockGenericLadder;
 import se.luppii.ladders.enums.OutputSide;
+import se.luppii.ladders.lib.Config;
 import se.luppii.ladders.lib.References;
 
 public class TileEntityLadderDispenser extends TileEntityMachineBase implements ISidedInventory {
@@ -142,7 +143,9 @@ public class TileEntityLadderDispenser extends TileEntityMachineBase implements 
 								try {
 									ladder = (BlockGenericLadder)Block.getBlockFromItem(stack.getItem());
 								} catch (Exception err) {
-									FMLLog.warning("[" + References.MOD_NAME + "] LadderDispenser found Block that is not any type of Luppis Ladders Ladder.");
+									if (Config.debugMode.getBoolean())
+										FMLLog.warning("[" + References.MOD_NAME + "] LadderDispenser found Block that is not any type of Luppis Ladders Ladder.");
+									
 									this.setActiveState(false);
 									return;
 								}
@@ -201,19 +204,23 @@ public class TileEntityLadderDispenser extends TileEntityMachineBase implements 
 					int y = yCoord;
 					int z = zCoord + zOffset;
 					
-					if (this.getPlacement() != OutputSide.UPDOWN) {
-						if (canRemoveLadder(x, y, z)) {
-							this.removeLadder(x, y, z);
-							finished = false;
-						}
-					} else {
-						if (canRemoveLadder(x, y - 1, z)) {
+					if (this.placement == OutputSide.UPDOWN) {
+							this.removeLadder(x, y + 1, z);
 							this.removeLadder(x, y - 1, z);
 							finished = false;
-						}
 						
-						if (canRemoveLadder(x, y + 1, z)) {
-							this.removeLadder(x, y + 1, z);
+					}else {
+						BlockGenericLadder block;
+						try {
+							block = (BlockGenericLadder) this.worldObj.getBlock(x, y, z);
+						} catch (Exception err) {
+							return;
+						}
+						if (this.canRemoveLadder(x, y - block.getDirection(), z)) {
+							this.removeLadder(x, y - block.getDirection(), z);
+							finished = false;
+						} else {
+							this.removeLadder(x, y, z);
 							finished = false;
 						}
 					}
@@ -229,44 +236,71 @@ public class TileEntityLadderDispenser extends TileEntityMachineBase implements 
 			}
 		}
 	}
-
+	
+	/**
+	 * Checks if there is removeable ladder att cords
+	 * 
+	 * <p>
+	 * Takes absolute coordinates and returns true if there is a Luppiis Ladder there
+	 * </p>
+	 * 
+	 * @param x Absolute coordinate
+	 * @param y Absolute coordinate
+	 * @param z Absolute coordinate
+	 * @return True if the block is of any Luppiis Ladder, false otherwise
+	 */
 	private boolean canRemoveLadder(int x, int y, int z) {
 
 		Block block = worldObj.getBlock(x, y, z);
 		return block == LLadders.blockRopeLadder || block == LLadders.blockSturdyLadder || block == LLadders.blockVineLadder;
 	}
-
+	
+	/**
+	 * Searches for furtherst away ladder and removes it
+	 * 
+	 * <p>
+	 * Given absolute coordinates this funktion searches for the top or bottom most ladder and removes it.
+	 * </p>
+	 * 
+	 * @param x Absolute coordinate
+	 * @param y Absolute coordinate
+	 * @param z Absolute coordinate
+	 */
 	private void removeLadder(int x, int y, int z) {
-		Block block = worldObj.getBlock(x, y, z);
-		int metadata = worldObj.getBlockMetadata(x, y, z);
-		if (block != LLadders.blockRopeLadder && block != LLadders.blockSturdyLadder && block != LLadders.blockVineLadder) {
+		BlockGenericLadder block; 
+		try {
+			block = (BlockGenericLadder)worldObj.getBlock(x, y, z);
+		} catch (Exception err) {
 			return;
 		}
-		else if (worldObj.getBlock(x, y - 1, z) == LLadders.blockRopeLadder || worldObj.getBlock(x, y - 1, z) == LLadders.blockVineLadder) { // We want to retract from bottom and up.
-			removeLadder(x, y - 1, z);
-		}
-		else if (worldObj.getBlock(x, y + 1, z) == LLadders.blockSturdyLadder) { // Or from the top down if sturdy ladders.
-			// This handles special case when there is one Sturdy ladder, and one hanging ladder left
-			if (!((block == LLadders.blockRopeLadder || block == LLadders.blockVineLadder) && worldObj.getBlock(x, y + 1, z) == LLadders.blockSturdyLadder))
-				removeLadder(x, y + 1, z);
-			else {
-				worldObj.setBlockToAir(x, y, z);
-				worldObj.removeTileEntity(x, y, z);
-				ItemStack itemstack = new ItemStack(block, 1, metadata & 12);
-				if (!this.insertLadderToDispenser(itemstack)) {
-					dropBlockAsItem(x, y, z, itemstack);
-				}
-			}
-		}
-		else {
-			if (worldObj.getBlock(x, y - 1, z) != LLadders.blockRopeLadder && worldObj.getBlock(x, y - 1, z) != LLadders.blockVineLadder) { // Don't retract the last sturdy ladder before we have retracted all hanging ladders  
-				worldObj.setBlockToAir(x, y, z);
-				worldObj.removeTileEntity(x, y, z);
-				ItemStack itemstack = new ItemStack(block, 1, metadata & 12);
-				if (!this.insertLadderToDispenser(itemstack)) {
-					dropBlockAsItem(x, y, z, itemstack);
-				}
-			}
+		
+		if (this.canRemoveLadder(x, y + block.getDirection(), z))
+			this.removeLadder(x, y + block.getDirection(), z);
+		else if (this.canRemoveLadder(x, y, z))
+			this.removeLadderFromWorld(x, y, z);	
+	}
+	
+	/**
+	 * Remove ladder from world
+	 * 
+	 * <p>
+	 * Removes the specifik ladder from world at given coordinates.
+	 * Preforms no checks at all that the given coordinates is a ladder.
+	 * </p>
+	 * 
+	 * @param x Absolute coordinate in world
+	 * @param y Absolute coordinate in world
+	 * @param z Absolute coordinate in world
+	 */
+	private void removeLadderFromWorld(int x, int y, int z) {
+		Block block = worldObj.getBlock(x, y, z);
+		int metadata = worldObj.getBlockMetadata(x, y, z);
+		
+		worldObj.setBlockToAir(x, y, z);
+		worldObj.removeTileEntity(x, y, z);
+		ItemStack itemstack = new ItemStack(block, 1, metadata & 12);
+		if (!this.insertLadderToDispenser(itemstack)) {
+			dropBlockAsItem(x, y, z, itemstack);
 		}
 	}
 	
