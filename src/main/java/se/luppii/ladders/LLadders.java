@@ -17,6 +17,8 @@ import se.luppii.ladders.gui.GuiHandler;
 import se.luppii.ladders.lib.Config;
 import se.luppii.ladders.lib.References;
 import se.luppii.ladders.modhelper.IExtension;
+import se.luppii.ladders.packet.LLaddersMessage;
+import se.luppii.ladders.packet.LLaddersMessageHandler;
 import se.luppii.ladders.proxy.CommonProxy;
 import se.luppii.ladders.tile.TileEntityBridgeBuilder;
 import se.luppii.ladders.tile.TileEntityLadderDispenser;
@@ -35,7 +37,9 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
 
 @Mod(modid = References.MOD_ID, name = References.MOD_NAME, version = References.MOD_VERSION)
 public class LLadders {
@@ -57,6 +61,8 @@ public class LLadders {
 	public static Block blockVineLadder;
 
 	public static boolean checkForUpdates;
+	
+	public static SimpleNetworkWrapper snw;
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
@@ -79,6 +85,10 @@ public class LLadders {
 		GameRegistry.registerBlock(blockBridgeBuilder, blockBridgeBuilder.getUnlocalizedName());
 		GameRegistry.registerTileEntity(TileEntityLadderDispenser.class, "LadderDispenser");
 		GameRegistry.registerBlock(blockLadderDispenser, blockLadderDispenser.getUnlocalizedName());
+		
+		// packet handler
+		snw = NetworkRegistry.INSTANCE.newSimpleChannel(References.MOD_ID);
+		snw.registerMessage(LLaddersMessageHandler.class, LLaddersMessage.class, 0, Side.SERVER);
 	}
 
 	@EventHandler

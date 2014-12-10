@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import se.luppii.ladders.LLadders;
 import se.luppii.ladders.lib.References;
 import se.luppii.ladders.tile.TileEntityVineLadder;
 import cpw.mods.fml.common.FMLLog;
@@ -27,6 +28,7 @@ public class BlockVineLadder extends BlockGenericLadder implements ITileEntityPr
 		this.setStepSound(soundTypeLadder);
 		this.setBlockName("lladders.block.vineladder");
 		this.enableLeftClick = par1Boolean;
+		this.direction = -1;
 	}
 
 	public void updateLadderBounds(int par1) {
@@ -127,6 +129,9 @@ public class BlockVineLadder extends BlockGenericLadder implements ITileEntityPr
 		if (metadata == 3 && par1World.isSideSolid(par2 + 1, par3, par4, WEST)) {
 			flag = true;
 		}
+		if (par1World.getBlock(par2, par3 + 1, par4) == LLadders.blockSturdyLadder) {
+			flag = true;
+		}
 		if (!flag) {
 			this.dropBlockAsItem(par1World, par2, par3, par4, metadata, 0);
 			par1World.setBlockToAir(par2, par3, par4);
@@ -191,5 +196,12 @@ public class BlockVineLadder extends BlockGenericLadder implements ITileEntityPr
 			return setLadder(world, x, y - 1, z, meta, player);
 		}
 		return false;
+	}
+	
+	public boolean isModeConforming(int mode) {
+		if (mode == 2)
+			return true;
+		else
+			return false;
 	}
 }

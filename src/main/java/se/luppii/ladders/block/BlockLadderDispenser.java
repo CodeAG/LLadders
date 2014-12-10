@@ -24,6 +24,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import se.luppii.ladders.LLadders;
+import se.luppii.ladders.enums.OutputSide;
 import se.luppii.ladders.lib.Config;
 import se.luppii.ladders.lib.References;
 import se.luppii.ladders.tile.TileEntityLadderDispenser;
@@ -104,7 +105,7 @@ public class BlockLadderDispenser extends BlockContainer {
 			par5 = ((TileEntityLadderDispenser) te).getRotatedSide(par5);
 			// Do stuff with this for bottom texture flip
 			int ordinal = ((TileEntityLadderDispenser) te).getFacingDirection().ordinal();
-			return this.getIcon(par5, meta, ordinal);
+			return this.getIcon(par5, meta, ordinal, ((TileEntityLadderDispenser) te).getPlacement());
 		}
 		return this.getIcon(par5, meta);
 	}
@@ -192,9 +193,44 @@ public class BlockLadderDispenser extends BlockContainer {
 		}
 	}
 
+	/**
+	 * Returns an texture for a side of the block depending on side and facing 
+	 * 
+	 * par1 = 0 -> bottom
+	 * par1 = 1 -> top
+	 * par1 = 2 -> left
+	 * par1 = 3 -> right
+	 * par1 = 4 -> front (facing player)
+	 * par1 = 5 -> back (facing away from player)
+	 * 
+	 * @param par1 side of the block
+	 * @param par2 metadata of block
+	 * @param par3 facing of the block
+	 * @param par4 side ladders are being outputed on
+	 * @return Icon (texture) of the side of the block
+	 */
 	@SideOnly(Side.CLIENT)
-	public IIcon getIcon(int par1, int par2, int par3) {
-
+	public IIcon getIcon(int par1, int par2, int par3, OutputSide par4) {
+		
+		// This bit is when ladders is outputed to the side and turns the textures appropriately 
+		if (par4 != OutputSide.UPDOWN) {
+			switch (par1) {
+				case 0: case 1:
+					return this.icons[4];
+				case 2:
+					if (par4 == OutputSide.LEFT)
+						return this.icons[1];
+					else
+						return this.icons[4];
+				case 3:
+					if (par4 == OutputSide.RIGHT)
+						return this.icons[0];
+					else
+						return this.icons[4];
+			}
+		}
+		
+		// this bit is when ladders are outputed up and down and need to turn the texture to face correctly 
 		switch (par2) {
 			case 0:
 				if (par3 > 1) {
@@ -215,6 +251,7 @@ public class BlockLadderDispenser extends BlockContainer {
 				else {
 					return getIcon(par1, par2);
 				}
+				
 			default:
 				FMLLog.warning("[" + References.MOD_NAME + "] Invalid metadata for " + getUnlocalizedName() + ". Metadata received was " + par2 + ".",
 						new Object[0]);

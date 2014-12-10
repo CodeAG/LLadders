@@ -27,6 +27,7 @@ public class BlockSturdyLadder extends BlockGenericLadder implements ITileEntity
 		this.setStepSound(soundTypeLadder);
 		this.setBlockName("lladders.block.sturdyladder");
 		this.enableLeftClick = par1Boolean;
+		this.direction = 1;
 	}
 
 	public void updateLadderBounds(int par1) {
@@ -195,5 +196,12 @@ public class BlockSturdyLadder extends BlockGenericLadder implements ITileEntity
 			return setLadder(world, x, y + 1, z, meta, player);
 		}
 		return false;
+	}
+	
+	public boolean isModeConforming(int mode) {
+		if (mode == 1)
+			return true;
+		else
+			return false;
 	}
 }

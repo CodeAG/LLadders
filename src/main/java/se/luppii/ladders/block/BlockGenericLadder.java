@@ -40,6 +40,8 @@ public abstract class BlockGenericLadder extends Block implements ITileEntityPro
 	protected boolean enableLeftClick;
 
 	public static int renderID;
+	
+	protected int direction;
 
 	// Basic constructor
 	public BlockGenericLadder(boolean par1Boolean) {
@@ -110,7 +112,16 @@ public abstract class BlockGenericLadder extends Block implements ITileEntityPro
 	 * @return TileEntity if on is created
 	 */
 	public abstract TileEntity createTileEntity(World world, int metadata);
-
+	
+	/**
+	 * Check to see if the working mode of a LadderDispenser is the same mode the Ladder is supposed to be placed.
+	 * 
+	 * This is a helper method for the LadderDispenser that checks if the mode of the LadderDispenser is conforming to the type of Ladder boolean true is returned
+	 * @param mode the mode the LadderDispenser is currently in. Sent as an integer
+	 * @return boolean true if the mode is the expected mode for this type of ladder
+	 */
+	public abstract boolean isModeConforming(int mode);
+	
 	public abstract TileEntity createNewTileEntity(World var1, int var2);
 
 	/**
@@ -153,6 +164,10 @@ public abstract class BlockGenericLadder extends Block implements ITileEntityPro
 	protected abstract boolean setLadder(World world, int x, int y, int z, int meta, EntityPlayer player);
 
 	/* Concrete methods go here */
+	public int getDirection() {
+		return this.direction;
+	}
+	
 	public boolean isBlockNormalCube(World world, int i, int j, int k) {
 
 		return false;
