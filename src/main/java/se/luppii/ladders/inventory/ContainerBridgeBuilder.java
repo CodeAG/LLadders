@@ -14,7 +14,7 @@ public class ContainerBridgeBuilder extends Container {
 	public ContainerBridgeBuilder(IInventory playerInventory, TileEntityBridgeBuilder te) {
 
 		this.tileEntity = te;
-		this.addSlotToContainer(new SlotBridgeBuilderSlot(this.tileEntity, 0, 71, 35));
+		this.addSlotToContainer(new SlotBridgeBuilder(this.tileEntity, 0, 71, 35));
 		this.addSlotToContainer(new SlotBlockTexture(this.tileEntity, 1, 135, 35));
 		bindPlayerInventory(playerInventory);
 	}
