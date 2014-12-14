@@ -34,7 +34,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockLadderDispenser extends BlockContainer {
 
-	private static String[] names = new String[] { "bottom_2", "bottom_3", "bottom_4", "bottom_5", "side", "front" };
+	private static String[] names = new String[] { "bottom_2", "bottom_3", "bottom_4", "bottom_5", "side", "front", "back" };
 
 	private IIcon[] icons;
 
@@ -237,7 +237,9 @@ public class BlockLadderDispenser extends BlockContainer {
 					if (par1 == 0 || par1 == 1) {
 						par1 = par3 - 2;
 					}
-					else {
+					else if (par1 == 5) {
+						par1 = 6;
+					} else {
 						par1 += 3;
 						if (par1 == 7) {
 							par1 = 5;
