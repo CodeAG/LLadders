@@ -126,14 +126,28 @@ public class LLadders {
 				FMLLog.warning(err.toString());
 			}
 		}
+		
+		// Check if Biomes O' PLenty is present. And if config says to use Biomes O' Plenty recipes.
+				if (Loader.isModLoaded("BiomesOPlenty") && Config.biomesOPlentyRecipe.getBoolean(true)) {
+					try {
+						Class.forName("se.luppii.ladders.modhelper.biomesoplenty.BiomesOPlenty").asSubclass(IExtension.class).newInstance().load();
+					}
+					catch (Exception err) {
+						FMLLog.warning("[" + References.MOD_NAME + "] Could not load compatible class for Biome O' Plenty");
+						FMLLog.warning(err.toString());
+					}
+				}
+				
 		// If vanilla rope ladder recipe should be removed.
-		if (!Config.removeVanillaRopeRecipe.getBoolean(true)) {
+		if (!Config.removeVanillaRopeRecipe.getBoolean(false)) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockRopeLadder, 4, 0), true, new Object[] { "S S", "PPP", "S S", 'P', "plankWood", 'S',
 					Items.string }));
 		}
-		// Vine Ladder
-		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockVineLadder, 6, 0), true, new Object[] { "V V", "PPP", "V V", 'P', "plankWood", 'V',
-				Blocks.vine }));
+		// If vanille Vine ladder recipe should be removed.
+		if (!Config.removeVanillaVineRecipe.getBoolean(false)) {
+			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockVineLadder, 6, 0), true, new Object[] { "V V", "PPP", "V V", 'P', "plankWood", 'V',
+					Blocks.vine }));
+		}
 		// Sturdy Ladder
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockSturdyLadder, 16, 0), true, new Object[] { "I I", "IPI", "I I", 'P', "plankWood", 'I',
 				Items.iron_ingot }));
