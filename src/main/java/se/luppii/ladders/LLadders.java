@@ -104,7 +104,16 @@ public class LLadders {
 
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent e) {
-
+		// Check if Ropes+ is present. And if config says to use Ropes+ recipes.
+		if (Loader.isModLoaded("Thaumcraft") && Config.useThaumcraft.getBoolean(true)) {
+			try {
+				Class.forName("se.luppii.ladders.modhelper.thaumcraft.Thaumcraft").asSubclass(IExtension.class).newInstance().load();
+			}
+			catch (Exception err) {
+				FMLLog.warning("[" + References.MOD_NAME + "] Could not load compatible class for Thaumcraft.");
+				FMLLog.warning(err.toString());
+			}
+		}
 	}
 
 	private static void registerEvent(Object par1Object, boolean par2) {
