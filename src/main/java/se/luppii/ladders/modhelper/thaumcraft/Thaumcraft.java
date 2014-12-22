@@ -28,7 +28,7 @@ public class Thaumcraft implements IExtension {
 			int[] direction =  {0, 1, 2, 3};
 			
 			// Sturdy ladders
-			thaumcraft.api.ThaumcraftApi.registerObjectTag(new ItemStack(LLadders.blockSturdyLadder), direction, (new AspectList()).add(Aspect.TOOL, 1).add(Aspect.METAL, 2));
+			thaumcraft.api.ThaumcraftApi.registerObjectTag(new ItemStack(LLadders.blockSturdyLadder), direction, (new AspectList()).add(Aspect.TOOL, 1).add(Aspect.METAL, 1));
 			
 			// Rope ladders
 			thaumcraft.api.ThaumcraftApi.registerObjectTag(new ItemStack(LLadders.blockRopeLadder), direction,  new AspectList().add(Aspect.TOOL, 1).add(Aspect.TREE, 2));
