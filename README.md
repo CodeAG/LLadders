@@ -18,7 +18,7 @@ Issues and feature requests, register them at https://github.com/CodeAG/LLadders
     * Download Thaumcraft-api zip-file from here https://github.com/Azanor/thaumcraft-api and extract it to src/main/java
     * Open Eclipse and there should now be a new source tree for thaumcraft-api. Right click it and choose "Export" then export it as a Jar file and check the option to have the source files included. 
     * Move the Jar file from where you saved it into the 'libs' folder
-    * Remove thaumcraft-api folder from src/main/java
+    * Remove thaumcraft-api folder from src/main/java again
   *For Biomes O' Plenty we use the deobfuscated jar. The API jar doesn't include the class we use in the api package, but the deobfuscated jar does.
     * Download the deobf for 1.7.10 from http://files.minecraftforge.net/BiomesOPlenty/ and place it in the 'libs' folder
 4. Navigate to root directory (LLadders) for the repository using the terminal/command prompt and run the following commands:
