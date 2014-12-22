@@ -28,6 +28,11 @@ public class Config {
 
 	// LadderDispenser config
 	public static Property canClimbOnDispenser;
+	
+	// Biomes O' Plenty
+	public static Property biomesOPlentyRecipe;
+	
+	public static Property removeVanillaVineRecipe;
 
 	public static void loadConfig(FMLPreInitializationEvent e) {
 
@@ -54,6 +59,9 @@ public class Config {
 			
 			// LadderDispenser config
 			canClimbOnDispenser = config.get("ladderdispenser", "Can climb on Ladder Dispenser", true);
+			// Biomes O' Plenty
+			biomesOPlentyRecipe = config.get("modcompat", "Use Biomes O' Plenty recipe for Vine Ladder (if mod is loaded)", true);
+			removeVanillaVineRecipe = config.get("modcompat", "Remove vanilla recipe for Vine Ladder", false);
 			config.save();
 		}
 		catch (Exception err) {
