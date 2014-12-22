@@ -11,7 +11,7 @@ Issues and feature requests, register them at https://github.com/CodeAG/LLadders
 1. Ensure that you have [Java JDK 7](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html) and [Git](http://git-scm.com/). If you use Windows you can replace Git with [Github for Windows](https://windows.github.com/) for easy (point-and-click) cloning and commiting.
 2. Clone the LLadders repository.
 3. You will need a deobfuscated copy of Ropes+, Thaumcraft-api and Biomes O' Plenty in order to build (not required for dev environment).
-  * You need to build an deobfuscated version from source
+  * You need to build an deobfuscated version from source for Ropes+
     * You can find the source code for Ropes+ at: https://code.google.com/p/atomicstrykers-minecraft-mods/source/browse
     * Place the deobfuscated Ropes+ jar-file in the 'libs' (create it if necessarily) folder in root directory (LLadders) for the repository.
   * There is no jar for ThaumcraftAPI and we use Eclipse so here are the instructions for Eclipse:
