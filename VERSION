@@ -1,1 +1,1 @@
-0.4.0:Climbable & Camouflage-able Ladder Dispensers. Rope Ladder has been split into Rope & Vine Ladder (new texture & model for Rope). [MC 1.7.10]
+0.5.0:Bridge Builder, a machine that will place up to 16 blocks in front of it, activated by redstone signal and can be camouflaged (like Ladder Dispenser). Selectable output side for Ladder Dispenser, and more! [MC 1.7.10]
