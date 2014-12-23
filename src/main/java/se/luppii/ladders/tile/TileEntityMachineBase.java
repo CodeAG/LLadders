@@ -31,7 +31,7 @@ public class TileEntityMachineBase extends TileEntity {
 
 	public int getForgeDirectionToInt(ForgeDirection dir) {
 
-		ForgeDirection[] directions =  ForgeDirection.VALID_DIRECTIONS;
+		ForgeDirection[] directions = ForgeDirection.VALID_DIRECTIONS;
 		for (int i = 0; i < directions.length; i++) {
 			if (directions[i] == dir) {
 				switch (i) {

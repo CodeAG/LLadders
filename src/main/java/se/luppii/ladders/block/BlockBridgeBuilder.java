@@ -186,7 +186,7 @@ public class BlockBridgeBuilder extends BlockContainer {
 				return icons[0];
 		}
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int par1, int par2, int ordinal) {
 

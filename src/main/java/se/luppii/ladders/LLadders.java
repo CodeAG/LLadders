@@ -61,7 +61,7 @@ public class LLadders {
 	public static Block blockVineLadder;
 
 	public static boolean checkForUpdates;
-	
+
 	public static SimpleNetworkWrapper snw;
 
 	@EventHandler
@@ -85,7 +85,6 @@ public class LLadders {
 		GameRegistry.registerBlock(blockBridgeBuilder, blockBridgeBuilder.getUnlocalizedName());
 		GameRegistry.registerTileEntity(TileEntityLadderDispenser.class, "LadderDispenser");
 		GameRegistry.registerBlock(blockLadderDispenser, blockLadderDispenser.getUnlocalizedName());
-		
 		// packet handler
 		snw = NetworkRegistry.INSTANCE.newSimpleChannel(References.MOD_ID);
 		snw.registerMessage(LLaddersMessageHandler.class, LLaddersMessage.class, 0, Side.SERVER);
@@ -104,6 +103,7 @@ public class LLadders {
 
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent e) {
+
 		// Check if Ropes+ is present. And if config says to use Ropes+ recipes.
 		if (Loader.isModLoaded("Thaumcraft") && Config.useThaumcraft.getBoolean(true)) {
 			try {
@@ -135,18 +135,16 @@ public class LLadders {
 				FMLLog.warning(err.toString());
 			}
 		}
-		
 		// Check if Biomes O' PLenty is present. And if config says to use Biomes O' Plenty recipes.
-				if (Loader.isModLoaded("BiomesOPlenty") && Config.biomesOPlentyRecipe.getBoolean(true)) {
-					try {
-						Class.forName("se.luppii.ladders.modhelper.biomesoplenty.BiomesOPlenty").asSubclass(IExtension.class).newInstance().load();
-					}
-					catch (Exception err) {
-						FMLLog.warning("[" + References.MOD_NAME + "] Could not load compatible class for Biomes O' Plenty");
-						FMLLog.warning(err.toString());
-					}
-				}
-				
+		if (Loader.isModLoaded("BiomesOPlenty") && Config.biomesOPlentyRecipe.getBoolean(true)) {
+			try {
+				Class.forName("se.luppii.ladders.modhelper.biomesoplenty.BiomesOPlenty").asSubclass(IExtension.class).newInstance().load();
+			}
+			catch (Exception err) {
+				FMLLog.warning("[" + References.MOD_NAME + "] Could not load compatible class for Biomes O' Plenty");
+				FMLLog.warning(err.toString());
+			}
+		}
 		// If vanilla rope ladder recipe should be removed.
 		if (!Config.removeVanillaRopeRecipe.getBoolean(false)) {
 			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockRopeLadder, 4, 0), true, new Object[] { "S S", "PPP", "S S", 'P', "plankWood", 'S',

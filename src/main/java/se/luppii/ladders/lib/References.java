@@ -20,7 +20,7 @@ public class References {
 	public static final String MOD_HELP_ROPES_NAME = "Luppii's Ladders Compatible: Ropes+";
 
 	public static final String MOD_HELP_ROPES_VERSION = "0.0.1";
-	
+
 	// Helper mod for Thaumcraft mod
 	public static final String MOD_HELP_THAUMCRAFT_ID = "LLadders|Thaumcraft";
 
@@ -34,5 +34,4 @@ public class References {
 	public static final String MOD_HELP_BIOMES_NAME = "Luppii's Ladders Compatible: Biomes O' Plenty";
 
 	public static final String MOD_HELP_BIOMES_VERSION = "0.0.1";
-
 }

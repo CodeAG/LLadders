@@ -197,8 +197,9 @@ public class BlockVineLadder extends BlockGenericLadder implements ITileEntityPr
 		}
 		return false;
 	}
-	
+
 	public boolean isModeConforming(int mode) {
+
 		if (mode == 2)
 			return true;
 		else

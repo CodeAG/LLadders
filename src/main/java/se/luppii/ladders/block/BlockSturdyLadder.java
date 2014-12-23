@@ -197,8 +197,9 @@ public class BlockSturdyLadder extends BlockGenericLadder implements ITileEntity
 		}
 		return false;
 	}
-	
+
 	public boolean isModeConforming(int mode) {
+
 		if (mode == 1)
 			return true;
 		else

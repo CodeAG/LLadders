@@ -194,28 +194,30 @@ public class BlockLadderDispenser extends BlockContainer {
 	}
 
 	/**
-	 * Returns an texture for a side of the block depending on side and facing 
+	 * Returns an texture for a side of the block depending on side and facing
 	 * 
-	 * par1 = 0 -> bottom
-	 * par1 = 1 -> top
-	 * par1 = 2 -> left
-	 * par1 = 3 -> right
-	 * par1 = 4 -> front (facing player)
-	 * par1 = 5 -> back (facing away from player)
+	 * par1 = 0 -> bottom par1 = 1 -> top par1 = 2 -> left par1 = 3 -> right
+	 * par1 = 4 -> front (facing player) par1 = 5 -> back (facing away from
+	 * player)
 	 * 
-	 * @param par1 side of the block
-	 * @param par2 metadata of block
-	 * @param par3 facing of the block
-	 * @param par4 side ladders are being outputed on
+	 * @param par1
+	 *            side of the block
+	 * @param par2
+	 *            metadata of block
+	 * @param par3
+	 *            facing of the block
+	 * @param par4
+	 *            side ladders are being outputed on
 	 * @return Icon (texture) of the side of the block
 	 */
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int par1, int par2, int par3, OutputSide par4) {
-		
+
 		// This bit is when ladders is outputed to the side and turns the textures appropriately 
 		if (par4 != OutputSide.UPDOWN) {
 			switch (par1) {
-				case 0: case 1:
+				case 0:
+				case 1:
 					return this.icons[4];
 				case 2:
 					if (par4 == OutputSide.LEFT)
@@ -229,7 +231,6 @@ public class BlockLadderDispenser extends BlockContainer {
 						return this.icons[4];
 			}
 		}
-		
 		// this bit is when ladders are outputed up and down and need to turn the texture to face correctly 
 		switch (par2) {
 			case 0:
@@ -239,7 +240,8 @@ public class BlockLadderDispenser extends BlockContainer {
 					}
 					else if (par1 == 5) {
 						par1 = 6;
-					} else {
+					}
+					else {
 						par1 += 3;
 						if (par1 == 7) {
 							par1 = 5;
@@ -253,7 +255,6 @@ public class BlockLadderDispenser extends BlockContainer {
 				else {
 					return getIcon(par1, par2);
 				}
-				
 			default:
 				FMLLog.warning("[" + References.MOD_NAME + "] Invalid metadata for " + getUnlocalizedName() + ". Metadata received was " + par2 + ".",
 						new Object[0]);

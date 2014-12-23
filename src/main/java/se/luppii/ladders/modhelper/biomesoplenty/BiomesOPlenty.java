@@ -5,12 +5,12 @@ package se.luppii.ladders.modhelper.biomesoplenty;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.ShapedOreRecipe;
-import cpw.mods.fml.common.FMLLog;
-import cpw.mods.fml.common.registry.GameRegistry;
 import se.luppii.ladders.LLadders;
 import se.luppii.ladders.lib.Config;
 import se.luppii.ladders.lib.References;
 import se.luppii.ladders.modhelper.IExtension;
+import cpw.mods.fml.common.FMLLog;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 /**
  * @author Aiquen
@@ -18,12 +18,12 @@ import se.luppii.ladders.modhelper.IExtension;
  */
 public class BiomesOPlenty implements IExtension {
 
-
 	/**
 	 * @see se.luppii.ladders.modhelper.IExtension#load()
 	 */
 	@Override
 	public void load() {
+
 		if (Config.biomesOPlentyRecipe.getBoolean(true)) {
 			// Try to use Ivy as recipes for ladders
 			try {
@@ -36,7 +36,5 @@ public class BiomesOPlenty implements IExtension {
 				FMLLog.warning(err.toString());
 			}
 		}
-
 	}
-
 }
