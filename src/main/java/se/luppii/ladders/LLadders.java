@@ -142,7 +142,7 @@ public class LLadders {
 						Class.forName("se.luppii.ladders.modhelper.biomesoplenty.BiomesOPlenty").asSubclass(IExtension.class).newInstance().load();
 					}
 					catch (Exception err) {
-						FMLLog.warning("[" + References.MOD_NAME + "] Could not load compatible class for Biome O' Plenty");
+						FMLLog.warning("[" + References.MOD_NAME + "] Could not load compatible class for Biomes O' Plenty");
 						FMLLog.warning(err.toString());
 					}
 				}
