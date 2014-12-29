@@ -34,6 +34,7 @@ import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
@@ -172,5 +173,15 @@ public class LLadders {
 		// Bridge Builder
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(blockBridgeBuilder, 1, 0), true, new Object[] { "III", "IDI", "IRI", 'I', Items.iron_ingot,
 				'D', Blocks.dispenser, 'R', Items.redstone }));
+	}
+	
+	// Compatibility with Applied Energistics 2 Spatial IO
+	@EventHandler
+	public void whiteListAppliedEnergetics(FMLInitializationEvent event) {
+		FMLInterModComms.sendMessage("appliedenergistics2", "whitelist-spatial", se.luppii.ladders.tile.TileEntityBridgeBuilder.class.getCanonicalName());
+		FMLInterModComms.sendMessage("appliedenergistics2", "whitelist-spatial", se.luppii.ladders.tile.TileEntityLadderDispenser.class.getCanonicalName());
+		FMLInterModComms.sendMessage("appliedenergistics2", "whitelist-spatial", se.luppii.ladders.tile.TileEntityRopeLadder.class.getCanonicalName());
+		FMLInterModComms.sendMessage("appliedenergistics2", "whitelist-spatial", se.luppii.ladders.tile.TileEntitySturdyLadder.class.getCanonicalName());
+		FMLInterModComms.sendMessage("appliedenergistics2", "whitelist-spatial", se.luppii.ladders.tile.TileEntityVineLadder.class.getCanonicalName());
 	}
 }
