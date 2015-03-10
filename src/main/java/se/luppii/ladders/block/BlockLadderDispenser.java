@@ -187,8 +187,8 @@ public class BlockLadderDispenser extends BlockContainer {
 				}
 				return icons[par1];
 			default:
-				FMLLog.warning("[" + References.MOD_NAME + "] Invalid metadata for " + getUnlocalizedName() + ". Metadata received was " + par2 + ".",
-						new Object[0]);
+				//FMLLog.warning("[" + References.MOD_NAME + "] Invalid metadata for " + getUnlocalizedName() + ". Metadata received was " + par2 + ".",
+				//		new Object[0]);
 				return icons[0];
 		}
 	}
@@ -256,8 +256,8 @@ public class BlockLadderDispenser extends BlockContainer {
 					return getIcon(par1, par2);
 				}
 			default:
-				FMLLog.warning("[" + References.MOD_NAME + "] Invalid metadata for " + getUnlocalizedName() + ". Metadata received was " + par2 + ".",
-						new Object[0]);
+				//FMLLog.warning("[" + References.MOD_NAME + "] Invalid metadata for " + getUnlocalizedName() + ". Metadata received was " + par2 + ".",
+				//		new Object[0]);
 				return icons[0];
 		}
 	}
