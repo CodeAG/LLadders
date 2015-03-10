@@ -181,8 +181,8 @@ public class BlockBridgeBuilder extends BlockContainer {
 					par1 = 0; // Side
 				return icons[par1];
 			default:
-				FMLLog.warning("[" + References.MOD_NAME + "] Invalid metadata for " + getUnlocalizedName() + ". Metadata received was " + par2 + ".",
-						new Object[0]);
+				//FMLLog.warning("[" + References.MOD_NAME + "] Invalid metadata for " + getUnlocalizedName() + ". Metadata received was " + par2 + ".",
+				//		new Object[0]);
 				return icons[0];
 		}
 	}
@@ -200,8 +200,8 @@ public class BlockBridgeBuilder extends BlockContainer {
 					par1 = 0; // Side
 				return icons[par1];
 			default:
-				FMLLog.warning("[" + References.MOD_NAME + "] Invalid metadata for " + getUnlocalizedName() + ". Metadata received was " + par2 + ".",
-						new Object[0]);
+				//FMLLog.warning("[" + References.MOD_NAME + "] Invalid metadata for " + getUnlocalizedName() + ". Metadata received was " + par2 + ".",
+				//		new Object[0]);
 				return icons[0];
 		}
 	}
