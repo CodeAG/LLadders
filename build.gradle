@@ -21,18 +21,10 @@ version = "0.5.5-" + System.getenv("BUILD_NUMBER")
 group = "se.luppii.ladders" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Ladders"
 
-sourceSets {
-    java {
-        srcDirs = ["$projectDir/java"]
-    }
-    resources {
-        srcDirs = ["$projectDir/resources"]
-    }
-}
 
 minecraft {
-    version = "1.7.10-10.13.2.1230"
-    assetDir = "eclipse/assets"
+    version = "1.7.10-10.13.4.1517-1.7.10"
+    runDir = "eclipse"
 }
 
 processResources
