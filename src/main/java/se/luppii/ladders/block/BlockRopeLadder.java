@@ -53,7 +53,7 @@ public class BlockRopeLadder extends BlockGenericLadder implements ITileEntityPr
 
 		return par1World.isSideSolid(par2 - 1, par3, par4, EAST) || par1World.isSideSolid(par2 + 1, par3, par4, WEST)
 				|| par1World.isSideSolid(par2, par3, par4 - 1, SOUTH) || par1World.isSideSolid(par2, par3, par4 + 1, NORTH)
-				|| par1World.isSideSolid(par2, par3 + 1, par4, DOWN) || par1World.getBlock(par2, par3 + 1, par4) == this;
+				|| par1World.isSideSolid(par2, par3 + 1, par4, DOWN) || (par1World.getBlock(par2, par3 + 1, par4) instanceof BlockGenericLadder);
 	}
 
 	@Override
