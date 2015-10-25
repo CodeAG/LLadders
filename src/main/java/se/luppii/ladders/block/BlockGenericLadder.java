@@ -18,6 +18,10 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.config.Property;
+import se.luppii.ladders.lib.Config;
+import se.luppii.ladders.lib.References;
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -130,26 +134,6 @@ public abstract class BlockGenericLadder extends Block implements ITileEntityPro
 	public abstract boolean isModeConforming(int mode);
 
 	public abstract TileEntity createNewTileEntity(World var1, int var2);
-
-	/**
-	 * Extension of {@link canPlaceBlockAt}
-	 * <p>
-	 * Checks if a ladder of the specific concrete type can be placed at
-	 * specific coordinates
-	 * 
-	 * @param world
-	 *            The current minecraft world we operate on
-	 * @param x
-	 *            X coordinate in the world
-	 * @param y
-	 *            Y coordinate in the world
-	 * @param z
-	 *            Z coordinate in the world
-	 * @param meta
-	 *            metadata of the block (in this case the facing of the ladder
-	 * @return True if ladder can be placed, false otherwise
-	 */
-	protected abstract boolean canSetLadder(World world, int x, int y, int z, int meta);
 
 	/**
 	 * Places a ladder in the world
@@ -356,6 +340,108 @@ public abstract class BlockGenericLadder extends Block implements ITileEntityPro
 			else if (GameSettings.isKeyDown(Minecraft.getMinecraft().gameSettings.keyBindSneak)) {
 				player.setVelocity(0.0D, 0.08D, 0.0D); // Found this by experimenting. An upward velocity of 0.08 negates gravity fall
 			}
+		}
+	}
+	
+	protected int ladderLength(World world, int x, int y, int z) {
+		int sum = 0; // total ladder length
+		
+		if (world.getBlock(x, y, z) instanceof BlockGenericLadder) {
+			sum++; // count ladder we started at
+			
+			if (Config.debugMode.getBoolean(true))
+				FMLLog.warning("[" + References.MOD_NAME + "] There is a ladder @[" + x + ", " + y + ", " + z + "]");
+			int i = 1; // step up/down from where we are
+			
+			if (Config.debugMode.getBoolean(true))
+				FMLLog.warning("[" + References.MOD_NAME + "] Is ladder above same? " + world.getBlock(x, y + i, z).getClass().isAssignableFrom(world.getBlock(x, y + i - 1, z).getClass()));
+			// count all ladders above the one we started with
+			while (world.getBlock(x, y + i, z).getClass().isAssignableFrom(world.getBlock(x, y + i - 1, z).getClass())) { // this checks if the class is the same for the ladder one step up and the step below
+				sum++;
+				i++;
+			}
+			i = 1; 
+			
+			if (Config.debugMode.getBoolean(true))
+				FMLLog.warning("[" + References.MOD_NAME + "] Is ladder below same? " + world.getBlock(x, y - i, z).getClass().isAssignableFrom(world.getBlock(x, y - i + 1, z).getClass()));
+			// now check all ladders below
+			while (world.getBlock(x, y - i, z).getClass().isAssignableFrom(world.getBlock(x, y - i + 1, z).getClass())) { // this checks if the class is the same for the ladder one step down and the step above
+				sum++;
+				i++;
+			}
+			
+		}
+		if (Config.debugMode.getBoolean(true))
+			FMLLog.warning("[" + References.MOD_NAME + "] Sum is: " + sum);
+		return sum;
+	}
+	
+	/**
+	 * Extension of {@link canPlaceBlockAt}
+	 * <p>
+	 * Checks if a ladder of the specific concrete type can be placed at
+	 * specific coordinates
+	 * 
+	 * @param world
+	 *            The current minecraft world we operate on
+	 * @param x
+	 *            X coordinate in the world
+	 * @param y
+	 *            Y coordinate in the world
+	 * @param z
+	 *            Z coordinate in the world
+	 * @param meta
+	 *            metadata of the block (in this case the facing of the ladder
+	 * @return True if ladder can be placed, false otherwise
+	 */
+	protected boolean canSetLadder(World world, int x, int y, int z, int meta) {
+		
+		if (Config.debugMode.getBoolean(true))
+			FMLLog.warning("[" + References.MOD_NAME + "] Checking before placeing ladder..");
+		
+		// set max to arbitrary number. -11 is just arbitrary chosen to help in debugging
+		int max = -11;
+		if (Config.debugMode.getBoolean(true))
+			FMLLog.warning("[" + References.MOD_NAME + "] Max is: " + max);
+		
+		// make heavy use of reflection to get the max value we want from the Config class
+		try {
+			int lastDot = this.getClass().getName().lastIndexOf(".");
+			String path = this.getClass().getName().substring(lastDot + 1);
+			max = ((Property) Config.class.getDeclaredField(path + "Length").get(null)).getInt();
+			if (Config.debugMode.getBoolean(true))
+				FMLLog.warning("[" + References.MOD_NAME + "] Max is: " + max);
+		} catch (IllegalArgumentException e) {
+			if (Config.debugMode.getBoolean(true))
+				e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			
+			if (Config.debugMode.getBoolean(true))
+				e.printStackTrace();
+		} catch (NoSuchFieldException e) {
+			if (Config.debugMode.getBoolean(true))
+				e.printStackTrace();
+		} catch (SecurityException e) {
+			if (Config.debugMode.getBoolean(true))
+				e.printStackTrace();
+		}
+		
+		if (world.getBlock(x, y, z) instanceof BlockGenericLadder)  {
+			if (Config.debugMode.getBoolean(true))
+				FMLLog.warning("[" + References.MOD_NAME + "] Max ladder length is: " + max);
+			if (max <= 0 || this.ladderLength(world, x, y, z) <= max) {
+				return canSetLadder(world, x, y + this.getDirection(), z, meta);
+			} else {
+				return false;
+			}
+		}
+		else if (!world.isAirBlock(x, y, z)) {
+			return false;
+		} else  {
+			if (max <= 0 || this.ladderLength(world, x, y - this.getDirection(), z) < max)
+				return true;
+			else
+				return false;
 		}
 	}
 }

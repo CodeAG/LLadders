@@ -15,6 +15,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import se.luppii.ladders.LLadders;
+import se.luppii.ladders.lib.Config;
 import se.luppii.ladders.lib.References;
 import se.luppii.ladders.tile.TileEntityRopeLadder;
 import cpw.mods.fml.common.FMLLog;
@@ -60,10 +61,10 @@ public class BlockRopeLadder extends BlockGenericLadder implements ITileEntityPr
 	public int onBlockPlaced(World par1World, int par2, int par3, int par4, int par5, float par6, float par7, float par8, int par9) {
 
 		int j1 = par9 & 3;
-		if (par1World.getBlock(par2, par3 + 1, par4) == this) {
+		if (par1World.getBlock(par2, par3 + 1, par4) instanceof BlockGenericLadder) {
 			return par1World.getBlockMetadata(par2, par3 + 1, par4) & 3;
 		}
-		if (par1World.getBlock(par2, par3 - 1, par4) == this) {
+		if (par1World.getBlock(par2, par3 - 1, par4) instanceof BlockGenericLadder) {
 			return par1World.getBlockMetadata(par2, par3 - 1, par4) & 3;
 		}
 		if ((par5 == 1 || par5 == 2) && par1World.isSideSolid(par2, par3, par4 + 1, NORTH)) {
@@ -111,7 +112,7 @@ public class BlockRopeLadder extends BlockGenericLadder implements ITileEntityPr
 
 		int metadata = par1World.getBlockMetadata(par2, par3, par4) & 3;
 		boolean flag = false;
-		if (par1World.getBlock(par2, par3 + 1, par4) == this) {
+		if (par1World.getBlock(par2, par3 + 1, par4) instanceof BlockGenericLadder) {
 			flag = true;
 		}
 		if (par1World.isSideSolid(par2, par3 + 1, par4, DOWN)) {
@@ -127,9 +128,6 @@ public class BlockRopeLadder extends BlockGenericLadder implements ITileEntityPr
 			flag = true;
 		}
 		if (metadata == 3 && par1World.isSideSolid(par2 + 1, par3, par4, WEST)) {
-			flag = true;
-		}
-		if (par1World.getBlock(par2, par3 + 1, par4) == LLadders.blockSturdyLadder) {
 			flag = true;
 		}
 		if (!flag) {
@@ -165,17 +163,6 @@ public class BlockRopeLadder extends BlockGenericLadder implements ITileEntityPr
 	public TileEntity createNewTileEntity(World var1, int var2) {
 
 		return new TileEntityRopeLadder();
-	}
-
-	protected boolean canSetLadder(World world, int x, int y, int z, int meta) {
-
-		if (world.getBlock(x, y, z) == this) {
-			return canSetLadder(world, x, y - 1, z, meta);
-		}
-		else if (!world.isAirBlock(x, y, z)) {
-			return false;
-		}
-		return true;
 	}
 
 	protected boolean setLadder(World world, int x, int y, int z, int meta, EntityPlayer player) {

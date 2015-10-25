@@ -196,8 +196,8 @@ public class BlockLadderDispenser extends BlockContainer {
 	/**
 	 * Returns an texture for a side of the block depending on side and facing
 	 * 
-	 * par1 = 0 -> bottom par1 = 1 -> top par1 = 2 -> left par1 = 3 -> right
-	 * par1 = 4 -> front (facing player) par1 = 5 -> back (facing away from
+	 * par1 = 0 -> bottom, par1 = 1 -> top, par1 = 2 -> left, par1 = 3 -> right
+	 * par1 = 4 -> front (facing player), par1 = 5 -> back (facing away from
 	 * player)
 	 * 
 	 * @param par1
@@ -207,7 +207,7 @@ public class BlockLadderDispenser extends BlockContainer {
 	 * @param par3
 	 *            facing of the block
 	 * @param par4
-	 *            side ladders are being outputed on
+	 *            side ladders are being outputted on
 	 * @return Icon (texture) of the side of the block
 	 */
 	@SideOnly(Side.CLIENT)
@@ -231,7 +231,7 @@ public class BlockLadderDispenser extends BlockContainer {
 						return this.icons[4];
 			}
 		}
-		// this bit is when ladders are outputed up and down and need to turn the texture to face correctly 
+		// this bit is when ladders are outputted up and down and need to turn the texture to face correctly 
 		switch (par2) {
 			case 0:
 				if (par3 > 1) {

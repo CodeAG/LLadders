@@ -16,11 +16,11 @@ public class Config {
 	public static Property debugMode;
 	
 	// Ladder lenghts
-	public static Property vineLadderLength;
+	public static Property BlockVineLadderLength;
 	
-	public static Property ropeLadderLength;
+	public static Property BlockRopeLadderLength;
 	
-	public static Property sturdyLadderLength;
+	public static Property BlockSturdyLadderLength;
 	
 	// Updater
 	public static Property checkForUpdates;
@@ -55,9 +55,9 @@ public class Config {
 			// Update Checker
 			checkForUpdates = config.get("updater", "Check for updates", true);
 			// Ladder lengths, 0 or less is infinite
-			vineLadderLength = config.get("Lengtha", "vineLadderLength", 16);
-			ropeLadderLength = config.get("Lengths", "ropeLadderLength", 32);
-			sturdyLadderLength = config.get("Lengths", "sturdyLadderLength", 32);
+			BlockVineLadderLength = config.get("Lengths", "vineLadderLength", 16);
+			BlockRopeLadderLength = config.get("Lengths", "ropeLadderLength", 32);
+			BlockSturdyLadderLength = config.get("Lengths", "sturdyLadderLength", 32);
 			// Ropes+ config
 			ropesPlusRecipe = config.get("modcompat", "Use Ropes+ recipe for Rope Ladder (if mod is loaded)", true);
 			removeVanillaRopeRecipe = config.get("modcompat", "Remove vanilla recipe for Rope Ladder", false);

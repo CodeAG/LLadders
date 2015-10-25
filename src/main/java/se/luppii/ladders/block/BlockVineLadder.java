@@ -167,17 +167,6 @@ public class BlockVineLadder extends BlockGenericLadder implements ITileEntityPr
 		return new TileEntityVineLadder();
 	}
 
-	protected boolean canSetLadder(World world, int x, int y, int z, int meta) {
-
-		if (world.getBlock(x, y, z) == this) {
-			return canSetLadder(world, x, y - 1, z, meta);
-		}
-		else if (!world.isAirBlock(x, y, z)) {
-			return false;
-		}
-		return true;
-	}
-
 	protected boolean setLadder(World world, int x, int y, int z, int meta, EntityPlayer player) {
 
 		Block block = world.getBlock(x, y, z);
